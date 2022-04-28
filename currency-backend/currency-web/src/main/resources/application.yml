@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: KpiServer
+  profiles:
+    active: dev
+  datasource:
+    console:
+      enabled: true
+    url: jdbc:h2:mem:currency
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 
+
+    jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+server:
+  port: 9100
+  servlet:
+    context-path: /
+    encoding:
+      enabled: true
+      charset: UTF-8
+      force: true
