@@ -65,7 +65,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.currency.crm</groupId>
-			<artifactId>currency-mware</artifactId>
+			<artifactId>currency-dataBean</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
