@@ -10,6 +10,7 @@ public class AddCurrencyInput extends BaseInputBo {
 	private String engName;
 	private String chineseName;
 	private String createBy;
+	private String remark;
 
 	public String getEngName() {
 		return engName;
@@ -33,6 +34,14 @@ public class AddCurrencyInput extends BaseInputBo {
 
 	public void setCreateBy(String createBy) {
 		this.createBy = createBy;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 
 	@Override

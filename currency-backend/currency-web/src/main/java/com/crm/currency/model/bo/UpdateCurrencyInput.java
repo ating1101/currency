@@ -9,6 +9,7 @@ public class UpdateCurrencyInput extends BaseInputBo{
 	private String engName;
 	private String chineseName;
 	private String updateBy;
+	private String remark;
 
 	public String getEngName() {
 		return engName;
@@ -34,6 +35,14 @@ public class UpdateCurrencyInput extends BaseInputBo{
 
 	public void setUpdateBy(String updateBy) {
 		this.updateBy = updateBy;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 
 	@Override

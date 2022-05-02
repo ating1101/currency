@@ -55,6 +55,7 @@ public class CurrencyInfoFacadeImpl implements ICurrencyInfoFacade {
 			LogUtil.error(this.getClass(), errCode, "addCurrency input 驗證發生錯誤");
 		}
 
+		// 新增對應幣別中文名稱對應資訊
 		CurrencyInfo currencyInfo = null;
 		if (goNext) {
 			LogUtil.info(this.getClass(), "addCurrency 新增幣別中文名稱 start, 幣別名稱 : " + input.getEngName());
@@ -63,6 +64,7 @@ public class CurrencyInfoFacadeImpl implements ICurrencyInfoFacade {
 				serviceInput.setEngName(input.getEngName());
 				serviceInput.setChineseName(input.getChineseName());
 				serviceInput.setCreateBy(input.getCreateBy());
+				serviceInput.setRemark(input.getRemark());
 				AddCurrencyInfoOutput serviceOutput = currencyService.addCurrencyInfo(serviceInput);
 				if (!serviceOutput.isSuccess()) {
 					goNext = false;
@@ -102,6 +104,7 @@ public class CurrencyInfoFacadeImpl implements ICurrencyInfoFacade {
 			LogUtil.error(this.getClass(), errCode, "updateCurrency input 驗證發生錯誤");
 		}
 
+		// 查詢對應幣別中文名稱對應資訊
 		CurrencyNameMap currencyNameMap = null;
 		if (goNext) {
 			LogUtil.info(this.getClass(), "updateCurrency 查詢幣別中文名稱 start, 幣別名稱 : " + input.getEngName());
@@ -128,6 +131,7 @@ public class CurrencyInfoFacadeImpl implements ICurrencyInfoFacade {
 			LogUtil.info(this.getClass(), "updateCurrency 查詢幣別中文名稱 end");
 		}
 
+		// 更新對應幣別中文名稱對應資訊
 		CurrencyInfo currencyInfo = null;
 		if (goNext && currencyNameMap != null) {
 			LogUtil.info(this.getClass(), "updateCurrency 更新幣別中文名稱 start, 幣別名稱 : " + input.getEngName());
@@ -136,6 +140,8 @@ public class CurrencyInfoFacadeImpl implements ICurrencyInfoFacade {
 				serviceInput.setEngName(input.getEngName());
 				serviceInput.setChineseName(input.getChineseName());
 				serviceInput.setUpdateBy(input.getUpdateBy());
+				serviceInput.setRemark(input.getRemark());
+				serviceInput.setOriCurNameMap(currencyNameMap);
 				UpdateCurrencyInfoOutput serviceOutput = currencyService.updateCurrencyInfo(serviceInput);
 				if (serviceOutput.isSuccess()) {
 					currencyInfo = serviceOutput.getCurrencyInfo();
@@ -174,6 +180,7 @@ public class CurrencyInfoFacadeImpl implements ICurrencyInfoFacade {
 			LogUtil.error(this.getClass(), errCode, "getCurrency input 驗證發生錯誤");
 		}
 
+		// 查詢對應幣別中文名稱對應資訊
 		CurrencyInfo currencyInfo = null;
 		if (goNext) {
 			LogUtil.info(this.getClass(), "getCurrency 查詢幣別中文名稱 start, 幣別名稱 : " + input.getEngName());
@@ -223,6 +230,7 @@ public class CurrencyInfoFacadeImpl implements ICurrencyInfoFacade {
 			LogUtil.error(this.getClass(), errCode, "deleteCurrency input 驗證發生錯誤");
 		}
 
+		// 查詢對應幣別中文名稱對應資訊
 		CurrencyNameMap currencyNameMap = null;
 		if (goNext) {
 			LogUtil.info(this.getClass(), "deleteCurrency 查詢幣別中文名稱 start, 幣別名稱 : " + input.getEngName());
@@ -249,6 +257,7 @@ public class CurrencyInfoFacadeImpl implements ICurrencyInfoFacade {
 			LogUtil.info(this.getClass(), "deleteCurrency 查詢幣別中文名稱 end");
 		}
 
+		// 刪除對應幣別中文名稱對應資訊
 		CurrencyInfo currencyInfo = null;
 		if (goNext && currencyNameMap != null) {
 			LogUtil.info(this.getClass(), "deleteCurrency 刪除幣別資訊 start, 幣別名稱 : " + input.getEngName());
@@ -285,6 +294,7 @@ public class CurrencyInfoFacadeImpl implements ICurrencyInfoFacade {
 		boolean goNext = true;
 		String errCode = "";
 
+		// 取得 bitcon coindesk 即時匯率
 		LogUtil.info(this.getClass(), "refreshExRate 取得即時匯率 start");
 		GetRealExRateInfoOutput serviceOutput = null;
 		try {
@@ -327,6 +337,7 @@ public class CurrencyInfoFacadeImpl implements ICurrencyInfoFacade {
 			LogUtil.error(this.getClass(), errCode, "getCurExInfo input 驗證發生錯誤");
 		}
 
+		// 取得對應幣別中文名稱
 		CurrencyInfo currencyInfo = null;
 		if (goNext) {
 			LogUtil.info(this.getClass(), "getCurExInfo 查詢幣別中文名稱 start, 幣別名稱 : " + input.getEngName());
@@ -353,6 +364,7 @@ public class CurrencyInfoFacadeImpl implements ICurrencyInfoFacade {
 			LogUtil.info(this.getClass(), "getCurExInfo 查詢幣別中文名稱 end");
 		}
 
+		// 取得 bitcon coindesk 即時匯率
 		GetRealExRateInfoOutput serviceOutput = null;
 		if (goNext) {
 			LogUtil.info(this.getClass(), "getCurExInfo 取得即時匯率 start, 幣別名稱 : " + input.getEngName());
@@ -375,27 +387,36 @@ public class CurrencyInfoFacadeImpl implements ICurrencyInfoFacade {
 
 		// 依幣別取得對應的中文名稱、即時匯率
 		if (goNext) {
-			Bpi bpi = serviceOutput.getRealTimeExRate().getBpi();
-			CurrencyExchangeInfo curExInfo = null;
-			switch (input.getEngName()) {
-			case SysConst.USD:
-				curExInfo = bpi.getUSD();
-				break;
-			case SysConst.GBP:
-				curExInfo = bpi.getGBP();
-				break;
-			case SysConst.EUR:
-				curExInfo = bpi.getEUR();
-				break;
-			default:
-				LogUtil.warn(this.getClass(), "getCurExInfo 查無對應幣別的匯率資訊, 幣別名稱 : " + input.getEngName());
-			}
-			if (curExInfo != null) {
-				String updateTime = serviceOutput.getRealTimeExRate().getTime().getUpdatedISO();
-				Date updateDate = DateUtil.parse(updateTime);
-				updateTime = DateUtil.format(updateDate, DateUtil.FORMAT_DateTime);
-				currencyInfo.setRateUpdateTime(updateTime);
-				currencyInfo.setRate(curExInfo.getRate());
+			try {
+				Bpi bpi = serviceOutput.getRealTimeExRate().getBpi();
+				CurrencyExchangeInfo curExInfo = null;
+				switch (input.getEngName()) {
+				case SysConst.USD:
+					curExInfo = bpi.getUSD();
+					break;
+				case SysConst.GBP:
+					curExInfo = bpi.getGBP();
+					break;
+				case SysConst.EUR:
+					curExInfo = bpi.getEUR();
+					break;
+				default:
+					goNext = false;
+					errCode = "error-006-007";
+					LogUtil.warn(this.getClass(), "getCurExInfo 查無對應幣別的匯率資訊, 幣別名稱 : " + input.getEngName());
+				}
+				if (curExInfo != null) {
+					String updateTime = serviceOutput.getRealTimeExRate().getTime().getUpdatedISO();
+					Date updateDate = DateUtil.parse(updateTime, DateUtil.FORMAT_TIME_CRM_CUST_ORG);
+					updateTime = DateUtil.format(updateDate, DateUtil.FORMAT_DateTime);
+					currencyInfo.setRateUpdateTime(updateTime);
+					currencyInfo.setRate(curExInfo.getRate());
+				}
+			} catch (Exception e) {
+				goNext = false;
+				errCode = "error-006-008";
+				LogUtil.error(this.getClass(), errCode,
+						"getCurExInfo 依幣別取得對應的中文名稱、即時匯率發生錯誤, 幣別名稱 : " + input.getEngName(), e);
 			}
 		}
 

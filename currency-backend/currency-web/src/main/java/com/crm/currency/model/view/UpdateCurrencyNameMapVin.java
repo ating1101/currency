@@ -5,7 +5,7 @@ import com.crm.currency.model.view.base.BaseVin;
 public class UpdateCurrencyNameMapVin extends BaseVin{
 	private String engName;
 	private String chineseName;
-	private String createBy;
+	private String updateBy;
 	private String remark;
 	
 	public String getEngName() {
@@ -20,11 +20,12 @@ public class UpdateCurrencyNameMapVin extends BaseVin{
 	public void setChineseName(String chineseName) {
 		this.chineseName = chineseName;
 	}
-	public String getCreateBy() {
-		return createBy;
+
+	public String getUpdateBy() {
+		return updateBy;
 	}
-	public void setCreateBy(String createBy) {
-		this.createBy = createBy;
+	public void setUpdateBy(String updateBy) {
+		this.updateBy = updateBy;
 	}
 	public String getRemark() {
 		return remark;

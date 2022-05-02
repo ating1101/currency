@@ -40,6 +40,8 @@ public class ExchangeRatePageController extends BaseController {
 	@Autowired
 	ICurrencyInfoFacade currencyInfoFacade;
 
+
+	// 新增對應幣別中文名稱對應資訊
 	@RequestMapping(value = "/addCurrencyInfo.action", method = RequestMethod.POST)
 	public AddCurrencyNameMapVout addCurrencyNameMap(@RequestBody AddCurrencyNameMapVin vin) {
 		AddCurrencyNameMapVout vout = new AddCurrencyNameMapVout();
@@ -64,6 +66,7 @@ public class ExchangeRatePageController extends BaseController {
 		return vout;
 	}
 
+	// 更新對應幣別中文名稱對應資訊
 	@RequestMapping(value = "/updateCurrencyInfo.action", method = RequestMethod.POST)
 	public UpdateCurrencyNameMapVout updateCurrencyNameMap(@RequestBody UpdateCurrencyNameMapVin vin) {
 		UpdateCurrencyNameMapVout vout = new UpdateCurrencyNameMapVout();
@@ -71,6 +74,8 @@ public class ExchangeRatePageController extends BaseController {
 		UpdateCurrencyInput facadeInput = new UpdateCurrencyInput();
 		facadeInput.setEngName(vin.getEngName());
 		facadeInput.setChineseName(vin.getChineseName());
+		facadeInput.setUpdateBy(vin.getUpdateBy());
+		facadeInput.setRemark(vin.getRemark());
 		// 未實做登入系統，先預設放系統建立
 		facadeInput.setUpdateBy("system");
 		UpdateCurrencyOutput facadeOutput = currencyInfoFacade.updateCurrency(facadeInput);
@@ -88,6 +93,7 @@ public class ExchangeRatePageController extends BaseController {
 		return vout;
 	}
 
+	// 取得對應幣別中文名稱對應資訊
 	@RequestMapping(value = "/getCurrencyInfo.action", method = RequestMethod.POST)
 	public FindCurNameMapByIdVout findCurrencyNameMapById(@RequestBody FindCurNameMapByIdVin vin) {
 		FindCurNameMapByIdVout vout = new FindCurNameMapByIdVout();
@@ -109,6 +115,7 @@ public class ExchangeRatePageController extends BaseController {
 		return vout;
 	}
 
+	// 刪除對應幣別中文名稱對應資訊
 	@RequestMapping(value = "/deleteCurrencyInfo.action", method = RequestMethod.POST)
 	public DeleteCurNameMapVout deleteCurrencyNameMap(@RequestBody DeleteCurNameMapVin vin) {
 		DeleteCurNameMapVout vout = new DeleteCurNameMapVout();
@@ -129,6 +136,7 @@ public class ExchangeRatePageController extends BaseController {
 		return vout;
 	}
 
+	// 從 coindesk 取得最新匯率
 	@RequestMapping(value = "/refreshExRate.action", method = RequestMethod.POST)
 	public RefreshRateVout refreshRate() {
 		RefreshRateVout vout = new RefreshRateVout();
@@ -151,6 +159,7 @@ public class ExchangeRatePageController extends BaseController {
 		return vout;
 	}
 
+	// 取得對應幣別中文名稱及即時匯率資訊
 	@RequestMapping(value = "/getCurExInfo.action", method = RequestMethod.POST)
 	public GetCurExInfoVout getCurExInfo(@RequestBody GetCurExInfoVin vin) {
 		GetCurExInfoVout vout = new GetCurExInfoVout();
