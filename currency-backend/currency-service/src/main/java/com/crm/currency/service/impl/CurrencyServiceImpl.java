@@ -25,7 +25,6 @@ import com.crm.currency.service.bo.UpdateCurrencyInfoOutput;
 import com.crm.currency.util.DateUtil;
 import com.crm.currency.util.LogUtil;
 
-
 @Component
 public class CurrencyServiceImpl implements ICurrencyService {
 
@@ -35,6 +34,7 @@ public class CurrencyServiceImpl implements ICurrencyService {
 	@Autowired
 	ICoindeskWmare coindeskMware;
 
+	// 查詢對應幣別中文名稱對應資訊
 	@Override
 	public GetCurrencyInfoOutput getCurrencyInfo(GetCurrencyInfoInput input) {
 		GetCurrencyInfoOutput output = new GetCurrencyInfoOutput();
@@ -72,6 +72,7 @@ public class CurrencyServiceImpl implements ICurrencyService {
 		return output;
 	}
 
+	// 新增對應幣別中文名稱對應資訊
 	@Override
 	public AddCurrencyInfoOutput addCurrencyInfo(AddCurrencyInfoInput input) {
 		boolean goNext = true;
@@ -91,6 +92,7 @@ public class CurrencyServiceImpl implements ICurrencyService {
 				currencyNameInfo.setChineseName(input.getChineseName());
 				currencyNameInfo.setCreateBy(input.getCreateBy());
 				currencyNameInfo.setCreateDate(new Date());
+				currencyNameInfo.setRemark(input.getRemark());
 				newCurrencyNameInfo = currencyNameMapRepository.save(currencyNameInfo);
 				if (newCurrencyNameInfo == null) {
 					goNext = false;
@@ -115,6 +117,7 @@ public class CurrencyServiceImpl implements ICurrencyService {
 		return output;
 	}
 
+	// 更新對應幣別中文名稱對應資訊
 	@Override
 	public UpdateCurrencyInfoOutput updateCurrencyInfo(UpdateCurrencyInfoInput input) {
 		boolean goNext = true;
@@ -133,6 +136,7 @@ public class CurrencyServiceImpl implements ICurrencyService {
 				oriCurNameMap.setChineseName(input.getChineseName());
 				oriCurNameMap.setUpdateBy(input.getUpdateBy());
 				oriCurNameMap.setUpdateDate(new Date());
+				oriCurNameMap.setRemark(input.getRemark());
 				newCurrencyNameInfo = currencyNameMapRepository.save(oriCurNameMap);
 				if (newCurrencyNameInfo == null) {
 					goNext = false;
@@ -157,6 +161,7 @@ public class CurrencyServiceImpl implements ICurrencyService {
 		return output;
 	}
 
+	// 刪除對應幣別中文名稱對應資訊
 	@Override
 	public DeleteCurrencyInfoOutput deleteCurrencyInfo(DeleteCurrencyInfoInput input) {
 		DeleteCurrencyInfoOutput output = new DeleteCurrencyInfoOutput();
@@ -186,6 +191,7 @@ public class CurrencyServiceImpl implements ICurrencyService {
 		return output;
 	}
 
+	// 呼叫 coindesk 取得最新匯率
 	@Override
 	public GetRealExRateInfoOutput getRealExRate(GetRealExRateInput input) {
 		GetRealExRateInfoOutput output = new GetRealExRateInfoOutput();

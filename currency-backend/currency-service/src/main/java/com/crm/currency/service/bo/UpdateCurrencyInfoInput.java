@@ -10,6 +10,7 @@ public class UpdateCurrencyInfoInput extends BaseInputBo{
 	private String engName;
 	private String chineseName;
 	private String updateBy;
+	private String remark;;
 	private CurrencyNameMap oriCurNameMap;
 	
 	public String getEngName() {
@@ -45,6 +46,14 @@ public class UpdateCurrencyInfoInput extends BaseInputBo{
 
 	public void setOriCurNameMap(CurrencyNameMap oriCurNameMap) {
 		this.oriCurNameMap = oriCurNameMap;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 
 	@Override
